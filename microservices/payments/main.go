@@ -6,10 +6,12 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/sssash18/Digicart/microservices/auth/routes"
+	"github.com/joho/godotenv"
+	"github.com/sssash18/Digicart/microservices/payments/routes"
 )
 
 func main() {
+	godotenv.Load()
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
 	routes.SetupRoutes(router)

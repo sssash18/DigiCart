@@ -10,4 +10,5 @@ func SetupRoutes(router *chi.Mux) {
 	router.Use(middleware.Authenticate)
 	router.Get("/pay/{id}", controller.PayOrder)
 	router.Get("/payments", controller.Payments)
+	router.Post("/payments/create", controller.CreatePayment)
 }

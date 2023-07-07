@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/sssash18/Digicart/microservices/orders/services"
@@ -53,6 +54,7 @@ func GetOrder(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateOrder(w http.ResponseWriter, r *http.Request) {
+	token := strings.Split((r.Header.Get("Authorization")), " ")[1]
 	order := &models.Order{}
 	err := json.NewDecoder(r.Body).Decode(order)
 	if err != nil {
@@ -65,7 +67,7 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	order.UserID = r.Header.Get("userID")
-	services.CreateOrder(order)
+	services.CreateOrder(order, token)
 	w.WriteHeader(http.StatusOK)
 	resp, _ := json.Marshal(models.Response{
 		Status: "success",

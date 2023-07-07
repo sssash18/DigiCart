@@ -22,7 +22,7 @@ func PayOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := services.PayOrder(paymentID,userID)
+	err := services.PayOrder(paymentID, userID)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		resp, _ := json.Marshal(models.Response{
@@ -43,21 +43,49 @@ func PayOrder(w http.ResponseWriter, r *http.Request) {
 
 func Payments(w http.ResponseWriter, r *http.Request) {
 	userID := r.Header.Get("userID")
-	payments,err := services.Payments(userID)
+	payments, err := services.Payments(userID)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		resp,_ := json.Marshal(models.Response{
+		resp, _ := json.Marshal(models.Response{
 			Status: "err",
-			Err: err.Error(),
+			Err:    err.Error(),
 		})
 		w.Write(resp)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	resp,_ := json.Marshal(models.Response{
+	resp, _ := json.Marshal(models.Response{
 		Status: "success",
-		Data : payments,
+		Data:   payments,
 	})
 	w.Write(resp)
-	return
+}
+
+func CreatePayment(w http.ResponseWriter, r *http.Request) {
+	payment := &models.Payment{}
+	err := json.NewDecoder(r.Body).Decode(payment)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		resp, _ := json.Marshal(models.Response{
+			Status: "err",
+			Err:    err.Error(),
+		})
+		w.Write(resp)
+		return
+	}
+	err = services.CreatePayment(payment)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		resp, _ := json.Marshal(models.Response{
+			Status: "err",
+			Err:    err.Error(),
+		})
+		w.Write(resp)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	resp, _ := json.Marshal(models.Response{
+		Status: "success",
+	})
+	w.Write(resp)
 }

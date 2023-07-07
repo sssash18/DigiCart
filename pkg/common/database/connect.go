@@ -18,6 +18,8 @@ func init() {
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Address{})
 	db.AutoMigrate(&models.Order{})
+	db.AutoMigrate(&models.Payment{})
+
 }
 
 func GetDB() *gorm.DB {

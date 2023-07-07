@@ -2,7 +2,9 @@ package services
 
 import (
 	"errors"
+	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/sssash18/Digicart/pkg/common/database"
 	"github.com/sssash18/Digicart/pkg/common/models"
 )
@@ -32,4 +34,15 @@ func Payments(userID string) ([]models.Payment, error) {
 		return nil, tx.Error
 	}
 	return *payments, nil
+}
+
+func CreatePayment(payment *models.Payment) error {
+	payment.PaymentID = uuid.New().String()
+	fmt.Println(payment)
+	db := database.GetDB()
+	tx := db.Create(payment)
+	if tx.Error != nil {
+		return tx.Error
+	}
+	return nil
 }
