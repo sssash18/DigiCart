@@ -28,13 +28,13 @@ func Notifier(msg []byte) error {
 	}
 
 	from := os.Getenv("SENDER_EMAIL")
-	password :=  os.Getenv("SENDER_PASSWORD")
+	password := os.Getenv("SENDER_PASSWORD")
 
 	to := []string{
-		"suyashchoudhary42@gmail.com",
+		message.Email,
 	}
 	smtpHost := os.Getenv("SMTP_HOST")
-	smtpPort :=  os.Getenv("SMTP_PORT")
+	smtpPort := os.Getenv("SMTP_PORT")
 
 	messageBody := []byte(GetMessage(message.MessageType, message.FirstName))
 

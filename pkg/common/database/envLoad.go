@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -9,7 +10,8 @@ import (
 )
 
 func EnvLoad() {
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	dir, err := os.Getwd()
+	fmt.Println(dir)
 	if err != nil {
 		log.Fatal(err)
 	}
