@@ -11,6 +11,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/sssash18/Digicart/pkg/common/database"
 	"github.com/sssash18/Digicart/pkg/common/models"
+	rabbitmq "github.com/sssash18/Digicart/pkg/common/rabbitmq/producer"
 )
 
 func GetOrders(userID string) ([]models.Order, error) {
@@ -57,5 +58,13 @@ func CreateOrder(order *models.Order, token string) (*models.Order, error) {
 	if resp.StatusCode != http.StatusOK {
 		return nil, err
 	}
+	user := models.User{}
+	db.Find(&user, "user_id=?", order.UserID)
+	rabbitmq.Publish(&models.Message{
+		MessageType: "ORDER_PLACED",
+		UserID:      order.UserID,
+		FirstName:   user.FirstName,
+		Email:       user.Email,
+	})
 	return order, nil
 }

@@ -2,11 +2,11 @@ package services
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/sssash18/Digicart/pkg/common/database"
 	"github.com/sssash18/Digicart/pkg/common/models"
+	rabbitmq "github.com/sssash18/Digicart/pkg/common/rabbitmq/producer"
 )
 
 func PayOrder(paymentID string, userID string) error {
@@ -23,6 +23,14 @@ func PayOrder(paymentID string, userID string) error {
 	payment.Status = "PAID"
 	payment.ModeOfPayment = "CASH"
 	db.Save(payment)
+	user := models.User{}
+	db.Find(&user, "user_id=?", payment.UserID)
+	rabbitmq.Publish(&models.Message{
+		MessageType: "PAYMENT_DONE",
+		UserID:      payment.UserID,
+		FirstName:   user.FirstName,
+		Email:       user.Email,
+	})
 	return nil
 }
 
@@ -38,7 +46,6 @@ func Payments(userID string) ([]models.Payment, error) {
 
 func CreatePayment(payment *models.Payment) error {
 	payment.PaymentID = uuid.New().String()
-	fmt.Println(payment)
 	db := database.GetDB()
 	tx := db.Create(payment)
 	if tx.Error != nil {
