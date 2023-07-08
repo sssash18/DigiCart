@@ -2,7 +2,7 @@
 # DigiCart
 
 An ecommerce application for homebakers.
-This application is a backend server for a bakery ecom application made for homebakers who out of hobby sell homemade bakery items. This helps them monetize and give them presence on a platform.
+This application is a backend server for a bakery ecom application made for homebakers who out of hobby sell homemade bakery items. This helps them monetize and give them presence on a platform. This web server is the for the customer side.
 
 ## Architecture
 The backend Architecture is made up of four microservices.
