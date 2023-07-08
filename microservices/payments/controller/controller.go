@@ -86,6 +86,7 @@ func CreatePayment(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	resp, _ := json.Marshal(models.Response{
 		Status: "success",
+		Data:   payment,
 	})
 	w.Write(resp)
 }

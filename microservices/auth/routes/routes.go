@@ -8,5 +8,4 @@ import (
 func SetupRoutes(router *chi.Mux) {
 	router.Post("/signup", controller.SignUp)
 	router.Post("/login", controller.Login)
-	router.Get("/logout", controller.LogOut)
 }

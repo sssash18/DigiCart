@@ -58,6 +58,9 @@ func CreateOrder(order *models.Order, token string) (*models.Order, error) {
 	if resp.StatusCode != http.StatusOK {
 		return nil, err
 	}
+	response := models.Response{}
+	json.NewDecoder(resp.Body).Decode(&response)
+	order.Payment = response.Data.(models.Payment)
 	user := models.User{}
 	db.Find(&user, "user_id=?", order.UserID)
 	rabbitmq.Publish(&models.Message{

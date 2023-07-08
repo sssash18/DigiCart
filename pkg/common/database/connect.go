@@ -1,6 +1,9 @@
 package database
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/sssash18/Digicart/pkg/common/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -9,7 +12,9 @@ import (
 var db *gorm.DB
 
 func init() {
-	dsn := "host=localhost user=suyashchoudhary  dbname=digicart  sslmode=disable TimeZone=Asia/Shanghai"
+	EnvLoad()
+	user := os.Getenv("DB_USER")
+	dsn := fmt.Sprintf("host=localhost user=%s  dbname=digicart  sslmode=disable TimeZone=Asia/Shanghai", user)
 	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
