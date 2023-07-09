@@ -133,6 +133,18 @@ To run this project, you will need to add the following environment variables to
 `SMTP_HOST default: smtp.gmail.com`
 
 `SMTP_PORT default:587`
+
+## Local Setup
+
+To run this project on local you need postgres and rabbitmq services running.
+There are four microservices, which can run by the following commands from root folder of the project.
+
+`cd auth`
+`go build`
+`./auth`
+
+Repeat the above commands for each of the microservice in seperate terminals.
+
 ## FAQ
 
 #### Is testing done for this project ?
