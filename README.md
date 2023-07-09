@@ -139,7 +139,7 @@ To run this project, you will need to add the following environment variables to
 To run this project on local you need postgres and rabbitmq services running.
 There are four microservices, which can run by the following commands from root folder of the project.
 
-`cd auth`
+`cd microservices/auth`
 
 `go build`
 
