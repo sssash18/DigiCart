@@ -140,7 +140,9 @@ To run this project on local you need postgres and rabbitmq services running.
 There are four microservices, which can run by the following commands from root folder of the project.
 
 `cd auth`
+
 `go build`
+
 `./auth`
 
 Repeat the above commands for each of the microservice in seperate terminals.
